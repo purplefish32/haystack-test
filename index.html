@@ -26,6 +26,7 @@
 
     #graphs {
       border-top: 2px solid #212426;
+      border-bottom: 1px solid #212426;
     }
 
 
@@ -39,8 +40,10 @@
 
 
 
-
-
+h2 {
+	color: #fff;
+	font-size: 26px;
+}
 
 
 
@@ -129,22 +132,57 @@ header {
   background: #aaa;
 }
 
-
 .timeline {
 	background-color: #111;
-	height: 200px;
+	height: 45px;
+}
+
+#images-preload{
+	display: none;
+}
+
+
+
+
+
+
+.sidebar {
+	border-right: 1px solid #212426;
+	width: 300px;
+	min-height: 400px;
+	float: left;
+	padding: 10px;
+}
+
+.main {
+	float: left;
+	padding-left: 20px;
 }
 
   </style>
 </head>
 <body>
-  <div id="header">
-    <h1>HAYSTACK</h1>
-  </div>
-  <div id="graphs"></div>
-  <svg class="chart">
-</svg>
+	<div id="header">
+		<h1>HAYSTACK</h1>
+	</div>
+	<div id="graphs"></div>
+	<aside class="sidebar">
+		<ul>
+			<li><a href="#">Link 1</a></li>
+			<li><a href="#">Link 1</a></li>
+			<li><a href="#">Link 1</a></li>
+			<li><a href="#">Link 1</a></li>
+			<li><a href="#">Link 1</a></li>
+		</ul>
+	</aside>
+	<div class="main">
+		<h2>Dashboard</h2>
+	</div>
 
+
+<div id="images-preload">
+   <img src="https://avatars1.githubusercontent.com/u/479917?v=3&s=25" id="id"> 
+</div>
 
   	<script src="bower_components/d3/d3.js" charset="utf-8"></script>
 
@@ -206,19 +244,7 @@ header {
       .attr("class", "horizon")
       .call(horizon);
 
-
-
-
-
-
-
-
-	var deploys = [123];
-
-	var timeline = context.timeline().height(200);
-
-
-
+	var timeline = context.timeline().height(45);
 
     d3.select("#graphs").selectAll(".timeline")
       .data([shortterm])
@@ -242,6 +268,7 @@ header {
 	  .enter().append("div")
 	    .attr("class", function(d) { return d + " axis"; })
 	    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
+
 
 </script>
 

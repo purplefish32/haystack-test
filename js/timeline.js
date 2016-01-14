@@ -41,7 +41,6 @@ cubism_contextPrototype.timeline = function() {
         if (this === context) {
             i0 = width - cubism_metricOverlap;
             var dx = (start1 - start) / step;
-            //console.log(dx);
             if (dx < width) {
               var canvas0 = buffer.getContext("2d");
               canvas0.clearRect(0, 0, width, height);
@@ -69,14 +68,15 @@ cubism_contextPrototype.timeline = function() {
         for (var i = i0, n = width, y1; i < n; ++i) {
           y1 = metric_.valueAt(i);
 
-          // Fill recttangle (X, Y, width, height)
-          console.log("+++");
-          console.log(i);
-          console.log(scale(y1));
-          console.log(y0 - y1);
-          console.log("+++");
+
+          if (y1 > 0.8) {
+            canvas.fillRect(i - 12.5, height - 35, 25, 25); // 180 = 200 - 20
+            canvas.fillRect(i, height - 45, 1, 45); // 180 = 200 - 20
+
+            var img = document.getElementById("id") //TODO get id from metric
+            canvas.drawImage(img,i - 12.5, height - 35, 25, 25);
+          }
           
-          canvas.fillRect(i, 180, 1, 20); // 180 = 200 - 20
         }
 
         canvas.restore();
