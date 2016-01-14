@@ -129,6 +129,12 @@ header {
   background: #aaa;
 }
 
+
+.timeline {
+	background-color: #111;
+	height: 200px;
+}
+
   </style>
 </head>
 <body>
@@ -136,46 +142,112 @@ header {
     <h1>HAYSTACK</h1>
   </div>
   <div id="graphs"></div>
-  <script src="bower_components/d3/d3.js" charset="utf-8"></script>
-  <script src="https://square.github.io/cubism/cubism.v1.min.js"></script>
+  <svg class="chart">
+</svg>
+
+
+  	<script src="bower_components/d3/d3.js" charset="utf-8"></script>
+
+	<script>
+		var exports = {};
+	</script>
+
+	<script src="cubism/src/cubism.js" charset="utf-8"></script>
+	<script src="cubism/src/id.js" charset="utf-8"></script>
+	<script src="cubism/src/identity.js" charset="utf-8"></script>
+	<script src="cubism/src/option.js" charset="utf-8"></script>
+	<script src="cubism/src/context.js" charset="utf-8"></script>
+	<script src="cubism/src/graphite.js" charset="utf-8"></script>
+	<script src="cubism/src/metric.js" charset="utf-8"></script>
+	<script src="cubism/src/metric-constant.js" charset="utf-8"></script>
+	<script src="cubism/src/metric-operator.js" charset="utf-8"></script>
+	<script src="cubism/src/horizon.js" charset="utf-8"></script>
+	<script src="js/timeline.js" charset="utf-8"></script>
+	<script src="cubism/src/axis.js" charset="utf-8"></script>
+	<script src="cubism/src/rule.js" charset="utf-8"></script>
+
   <script charset="utf-8">
 
-var context = cubism.context()
-    .step(1 * 60 * 1000) //seconds
-    .size(1600); //seconds
+	var context = cubism.context()
+	    .step(10 * 1000) // 10 seconds
+	    .serverDelay(0) // No server delay
+		.clientDelay(0) // No client delay
+	    .size(1600); //seconds
 
-var graphite = context.graphite("http://crash.innovalangues.net:81");
+	var graphite = context.graphite("http://crash.innovalangues.net:81");
 
-var processingTime = graphite.metric("stats.statsd.processing_time").alias("Processing time");
-var processingTime2 = graphite.metric("stats.statsd.processing_time").alias("Processing time2");
+	var shortterm = graphite.metric("collectd.crash.load.load.shortterm").alias("Load Short Term");
+	var midterm = graphite.metric("collectd.crash.load.load.midterm").alias("Load Mid Term");
+	var longterm = graphite.metric("collectd.crash.load.load.longterm").alias("Load Long Term");
+	
 
-d3.select("#graphs").call(function(div) {
-    div.append("div").selectAll(".horizon")
-         .data([processingTime, processingTime2])
-         .enter().append("div")
-         .attr("class", "horizon")
-        .call(context.horizon()
-          .height(50)
-          .colors(["#003242","#003242"])
-        );
-});
+	// draw graph
+	var horizon = context
+		.horizon()
+		.extent([0,0.5])
+		.height(50)
+		.colors(
+			[
+				//Must be even number, first half are for negatif numbers
+				"#f00",
+				"#f00",
+				"#f00",
+
+				"#003242", // Dark blue
+				"#009bd0", // Light blue
+				"#ffffff" // White
+			]
+		);
+
+	d3.select("#graphs").selectAll(".horizon")
+      .data([shortterm, midterm, longterm])
+      .enter()
+      .append("div")
+      .attr("class", "horizon")
+      .call(horizon);
 
 
-d3.select("#graphs").selectAll(".axis")
-    .data(["bottom"])
-  .enter().append("div")
-    .attr("class", function(d) { return d + " axis"; })
-    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
 
-// Transport bar
-d3.select("#graphs").append("div")
-    .call(context.rule());
 
-// Values follow transport bar
-context.on("focus", function(i) {
-  d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
-});
+
+
+
+
+	var deploys = [123];
+
+	var timeline = context.timeline().height(200);
+
+
+
+
+    d3.select("#graphs").selectAll(".timeline")
+      .data([shortterm])
+      .enter()
+      .append("div")
+      .attr("class", "timeline")
+      .call(timeline);
+
+	// Transport bar
+	d3.select("#graphs").append("div")
+	    .call(context.rule());
+
+	// Values follow transport bar
+	context.on("focus", function(i) {
+	  d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
+	});
+
+	// Axis
+	d3.select("#graphs").selectAll(".axis")
+	    .data(["bottom"])
+	  .enter().append("div")
+	    .attr("class", function(d) { return d + " axis"; })
+	    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
 
 </script>
+
+<!--
+http://crash.innovalangues.net:81/events/get_data
+-->
+
 </body>
 </html>
