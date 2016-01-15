@@ -42,12 +42,14 @@ cubism_contextPrototype.graphite = function(host) {
 
 
   //WARNING DANGER ZONE
+  /*
   source.events = function(expression) {
     d3.text(host + "/events/get_data?" + "&target=" + encodeURIComponent("events('"+ expression +"')"), function(text) {
       if (!text) return callback(new Error("unable to load data"));
       return text;
     });
   }
+  */
   // END  DANGER ZONE
 
 

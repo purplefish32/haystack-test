@@ -174,6 +174,11 @@ header {
 			<li><a href="#">Link 1</a></li>
 			<li><a href="#">Link 1</a></li>
 		</ul>
+		<h3>
+			Latest deploys
+		</h3>
+		<ul id="latest-deploys">
+		</ul>
 	</aside>
 	<div class="main">
 		<h2>Dashboard</h2>
@@ -181,7 +186,7 @@ header {
 
 
 <div id="images-preload">
-   <img src="https://avatars1.githubusercontent.com/u/479917?v=3&s=25" id="id"> 
+   <img src="https://avatars1.githubusercontent.com/u/479917?v=3&s=25" id="donovan"> 
 </div>
 
   	<script src="bower_components/d3/d3.js" charset="utf-8"></script>
@@ -219,10 +224,10 @@ header {
 	var longterm = graphite.metric("collectd.crash.load.load.longterm").alias("Load Long Term");	
 
 	//var events = graphite.events("*").alias("Deploys");	
-	var events = graphite.events("*");
+	//var events = graphite.events("*");
 
 
-	console.log(events);
+	//console.log(events);
 
 
 	// draw graph
@@ -253,7 +258,7 @@ header {
 	var timeline = context.timeline().height(45);
 
     d3.select("#graphs").selectAll(".timeline")
-      .data([events])
+      .data([shortterm])
       .enter()
       .append("div")
       .attr("class", "timeline")
@@ -276,10 +281,6 @@ header {
 	    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
 
 </script>
-
-<!--
-http://crash.innovalangues.net:81/events/get_data
--->
 
 </body>
 </html>
