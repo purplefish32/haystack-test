@@ -216,8 +216,14 @@ header {
 
 	var shortterm = graphite.metric("collectd.crash.load.load.shortterm").alias("Load Short Term");
 	var midterm = graphite.metric("collectd.crash.load.load.midterm").alias("Load Mid Term");
-	var longterm = graphite.metric("collectd.crash.load.load.longterm").alias("Load Long Term");
-	
+	var longterm = graphite.metric("collectd.crash.load.load.longterm").alias("Load Long Term");	
+
+	//var events = graphite.events("*").alias("Deploys");	
+	var events = graphite.events("*");
+
+
+	console.log(events);
+
 
 	// draw graph
 	var horizon = context
@@ -247,7 +253,7 @@ header {
 	var timeline = context.timeline().height(45);
 
     d3.select("#graphs").selectAll(".timeline")
-      .data([shortterm])
+      .data([events])
       .enter()
       .append("div")
       .attr("class", "timeline")
@@ -268,7 +274,6 @@ header {
 	  .enter().append("div")
 	    .attr("class", function(d) { return d + " axis"; })
 	    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
-
 
 </script>
 
