@@ -27,8 +27,11 @@ cubism_contextPrototype.timeline = function() {
 
         //canvas.save();
 
+        var avatarSize = 20;
+
         canvas.fillStyle = 'red';
-        canvas.fillRect(20,height-35,20,20);
+        canvas.fillRect(200,(height - avatarSize) / 2,avatarSize,avatarSize);
+        canvas.fillRect(20,20,1,20);
 
         //canvas.restore();
       }
