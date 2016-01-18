@@ -1,0 +1,1 @@
+curl -X POST "http://crash.innovalangues.net:81/events/" -d '{"what": "Event - deploy", "tags": "deploy", "data": "deploy of master branch happened at Fri Jan  3 22:34:41 UTC 2014"}'

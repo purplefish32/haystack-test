@@ -10,6 +10,10 @@
 
     body {
       background-color: #151515;
+      color: #fff;
+	  margin: 30px auto;
+	  width: 1600px;
+	  position: relative;
     }
 
     #header {
@@ -29,57 +33,28 @@
       border-bottom: 1px solid #212426;
     }
 
+	h2 {
+		font-size: 26px;
+	}
 
+	header {
+	  padding: 6px 0;
+	}
 
+	.group {
+	  margin-bottom: 1em;
+	}
 
+	.axis {
+	  font: 10px sans-serif;
+	  pointer-events: none;
+	  z-index: 2;
+	}
 
-
-
-
-
-
-
-
-h2 {
-	color: #fff;
-	font-size: 26px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-body {
-  margin: 30px auto;
-  width: 1600px;
-  position: relative;
-}
-
-header {
-  padding: 6px 0;
-}
-
-.group {
-  margin-bottom: 1em;
-}
-
-.axis {
-  font: 10px sans-serif;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.axis text {
-  -webkit-transition: fill-opacity 250ms linear;
-  fill: #444;
-}
+	.axis text {
+	  -webkit-transition: fill-opacity 250ms linear;
+	  fill: #444;
+	}
 
 .axis path {
   display: none;
@@ -141,11 +116,6 @@ header {
 	display: none;
 }
 
-
-
-
-
-
 .sidebar {
 	border-right: 1px solid #212426;
 	width: 300px;
@@ -169,10 +139,6 @@ header {
 	<aside class="sidebar">
 		<ul>
 			<li><a href="#">Link 1</a></li>
-			<li><a href="#">Link 1</a></li>
-			<li><a href="#">Link 1</a></li>
-			<li><a href="#">Link 1</a></li>
-			<li><a href="#">Link 1</a></li>
 		</ul>
 		<h3>
 			Latest deploys
@@ -183,13 +149,12 @@ header {
 	<div class="main">
 		<h2>Dashboard</h2>
 	</div>
-
-
-<div id="images-preload">
-   <img src="https://avatars1.githubusercontent.com/u/479917?v=3&s=25" id="donovan"> 
-</div>
-
+	<div id="images-preload">
+	   <img src="https://avatars1.githubusercontent.com/u/479917?v=3&s=25" id="donovan"> 
+	</div>
+  	<script src="bower_components/jquery/dist/jquery.min.js" charset="utf-8"></script>
   	<script src="bower_components/d3/d3.js" charset="utf-8"></script>
+  	<script src="bower_components/moment/moment.js" charset="utf-8"></script>
 
 	<script>
 		var exports = {};
@@ -222,13 +187,6 @@ header {
 	var shortterm = graphite.metric("collectd.crash.load.load.shortterm").alias("Load Short Term");
 	var midterm = graphite.metric("collectd.crash.load.load.midterm").alias("Load Mid Term");
 	var longterm = graphite.metric("collectd.crash.load.load.longterm").alias("Load Long Term");	
-
-	//var events = graphite.events("*").alias("Deploys");	
-	//var events = graphite.events("*");
-
-
-	//console.log(events);
-
 
 	// draw graph
 	var horizon = context
@@ -279,6 +237,8 @@ header {
 	  .enter().append("div")
 	    .attr("class", function(d) { return d + " axis"; })
 	    .each(function(d) { d3.select(this).call(context.axis().ticks(12).orient(d)); });
+
+	moment().format();
 
 </script>
 
