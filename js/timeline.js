@@ -36,7 +36,7 @@ cubism_contextPrototype.timeline = function() {
               if($("#deploy-" + event.when).length == 0) { 
 
                 $("#latest-deploys").prepend(
-                  '<li id="' + "deploy-" + event.when + '"><h3>' + event.what + '</h3><em>' + event.data + '</em></li>'
+                  '<li id="' + "deploy-" + event.when + '"><h4>' + event.what + '</h4><em>' + event.data + '</em></li>'
                 );
               }
 
